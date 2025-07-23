@@ -36,7 +36,7 @@ public class BookService {
         // Find the book by ID
         Book book = bookRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Book not found with id: " + id));
-        
+
         // Convert Book entity to BookResponse DTO
         return new BookResponse(book.getId(), book.getTitle(), book.getAuthor(), book.getIsbn(), book.getPrice());
     }
@@ -79,7 +79,7 @@ public class BookService {
         }
 
         // Delete the book by ID
-         bookRepository.deleteById(id);
+        bookRepository.deleteById(id);
     }
 
     public void deleteAllBooks() {
@@ -101,4 +101,5 @@ public class BookService {
     private BookResponse mapToBookResponse(Book book) {
         return new BookResponse(book.getId(), book.getTitle(), book.getAuthor(), book.getIsbn(), book.getPrice());
     }
+
 }
