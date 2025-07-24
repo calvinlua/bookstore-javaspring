@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,13 +33,12 @@ public class BookService {
         return new BookResponse(savedBook.getId(), savedBook.getTitle(), savedBook.getAuthor(), savedBook.getIsbn(), savedBook.getPrice());
     }
 
-    public BookResponse getBookById(Long id) {
-        // Find the book by ID
-        Book book = bookRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Book not found with id: " + id));
-
+    public Optional<BookResponse> getBookById(Long id) {
         // Convert Book entity to BookResponse DTO
-        return new BookResponse(book.getId(), book.getTitle(), book.getAuthor(), book.getIsbn(), book.getPrice());
+
+        return bookRepository.findById(id).map(
+            book -> new BookResponse(book.getId(), book.getTitle(), book.getAuthor(), book.getIsbn(), book.getPrice()
+      ));
     }
 
     public List<BookResponse> getAllBooks() {
